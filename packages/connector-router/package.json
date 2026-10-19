@@ -1,0 +1,20 @@
+{
+  "name": "@codrawithm/connector-router",
+  "version": "0.1.0",
+  "description": "Deterministic orthogonal connector routing with obstacle clearance.",
+  "type": "module",
+  "main": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "files": ["src"],
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.3",
+    "vitest": "^5.0.5"
+  }
+}
