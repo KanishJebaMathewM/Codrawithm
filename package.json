@@ -1,0 +1,13 @@
+{
+  "name": "codrawithm",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@10.4.1",
+  "scripts": {
+    "dev": "pnpm --filter @codrawithm/web dev",
+    "build": "pnpm --filter @codrawithm/web build",
+    "test": "pnpm --filter @codrawithm/web test",
+    "typecheck": "pnpm --filter @codrawithm/web typecheck",
+    "lint": "pnpm --filter @codrawithm/web lint"
+  }
+}

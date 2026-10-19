@@ -1,0 +1,7 @@
+import { Check, ChevronDown, Minus, Plus, Save } from 'lucide-react';
+import { useCanvasStore } from '../../../stores/canvas-store';
+
+export function StatusBar() {
+  const { activeTool, selectedIds, saveState, lastSaved, viewport, zoomBy, setViewport, markSaved } = useCanvasStore();
+  return <footer className="status-bar"><div className="status-left"><span className="status-tool"><span className="status-tool-dot" /> {activeTool[0].toUpperCase() + activeTool.slice(1)}</span><span className="status-separator" /> <span>{selectedIds.length ? `${selectedIds.length} object${selectedIds.length > 1 ? 's' : ''} selected` : 'Nothing selected'}</span></div><button className="save-status" onClick={markSaved}><Save size={13} /> {saveState === 'saved' ? `Saved ${lastSaved}` : 'Unsaved changes'} {saveState === 'saved' && <Check size={13} />}</button><div className="status-right"><span className="coordinate-label">x 420&nbsp;&nbsp; y 286</span><span className="zoom-control"><button aria-label="Zoom out" onClick={() => zoomBy(0.9)}><Minus size={13} /></button><button className="zoom-value" onClick={() => setViewport({ x: 0, y: 0, zoom: 0.86 })}>{Math.round(viewport.zoom * 100)}%</button><button aria-label="Zoom in" onClick={() => zoomBy(1.1)}><Plus size={13} /></button></span><button className="fit-button" onClick={() => setViewport({ x: 0, y: 0, zoom: 0.86 })}>Fit <ChevronDown size={13} /></button></div></footer>;
+}

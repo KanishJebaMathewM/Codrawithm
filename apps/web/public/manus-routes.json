@@ -1,0 +1,7 @@
+{
+  "routes": [
+    { "path": "/", "title": "Codrawithm workspaces" },
+    { "path": "/board/:boardId", "title": "Board editor" },
+    { "path": "/algorithm", "title": "Algorithm Lab" }
+  ]
+}

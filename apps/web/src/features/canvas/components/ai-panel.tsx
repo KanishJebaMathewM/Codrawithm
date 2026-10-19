@@ -1,0 +1,9 @@
+import { ArrowUp, Bot, ChevronDown, Loader2, Sparkles, WandSparkles, X } from 'lucide-react';
+import { Button, Badge, SectionLabel } from '../../../components/ui/primitives';
+import { useCanvasStore } from '../../../stores/canvas-store';
+
+export function AiPanel() {
+  const { showAiPanel, toggleAiPanel } = useCanvasStore();
+  if (!showAiPanel) return null;
+  return <aside className="ai-panel"><div className="panel-header"><div><SectionLabel>AI Studio</SectionLabel><strong>Make a first draft</strong></div><button className="icon-button" onClick={toggleAiPanel} aria-label="Close AI panel"><X size={16} /></button></div><div className="ai-provider"><span className="provider-icon"><Bot size={16} /></span><span><strong>Codrawithm AI</strong><small>Ready to generate</small></span><ChevronDown size={14} /></div><div className="ai-prompt-card"><div className="ai-prompt-heading"><Sparkles size={15} /><span>Describe a diagram</span></div><textarea defaultValue="Map the checkout flow from browser to payment service and database." aria-label="Describe a diagram" /><div className="ai-prompt-footer"><span className="mono-text">312 / 500 tokens</span><Button size="sm"><ArrowUp size={14} /> Draft</Button></div></div><div className="ai-suggestion"><WandSparkles size={15} /><div><strong>Try an intent, not a shape</strong><span>“Show the handoffs in our release pipeline.”</span></div></div><div className="ai-usage"><div><span>Monthly usage</span><Badge tone="violet">42% used</Badge></div><div className="usage-bar"><span style={{ width: '42%' }} /></div><small>Mock provider · connect a plugin to enable generation</small></div><div className="ai-history"><SectionLabel>Recent actions</SectionLabel><div className="ai-history-item"><span className="history-dot"><Loader2 size={13} /></span><span><strong>System map draft</strong><small>3 objects · 2 min ago</small></span></div></div></aside>;
+}

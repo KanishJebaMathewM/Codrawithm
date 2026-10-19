@@ -1,0 +1,106 @@
+import type { BoardSummary, CanvasObject, Collaborator } from '../types';
+
+export const boardSummaries: BoardSummary[] = [
+  {
+    id: 'system-map',
+    name: 'Distributed system map',
+    type: 'Whiteboard',
+    description: 'Sketch the flow from edge requests to resilient services.',
+    updatedAt: 'Edited 12 min ago',
+    objectCount: 12,
+    accent: 'indigo',
+  },
+  {
+    id: 'sorting-notes',
+    name: 'Sorting algorithms',
+    type: 'Algorithm Lab',
+    description: 'Compare time complexity and observe each swap in motion.',
+    updatedAt: 'Edited yesterday',
+    objectCount: 28,
+    accent: 'amber',
+  },
+  {
+    id: 'api-review',
+    name: 'API review board',
+    type: 'Developer Studio',
+    description: 'A shared review surface for the next versioned API.',
+    updatedAt: 'Edited 3 days ago',
+    objectCount: 42,
+    accent: 'violet',
+  },
+];
+
+export const starterObjects: CanvasObject[] = [
+  {
+    id: 'edge-node',
+    type: 'rectangle',
+    x: 180,
+    y: 150,
+    width: 180,
+    height: 92,
+    rotation: 0,
+    fill: '#eef2ff',
+    stroke: '#6366f1',
+    strokeWidth: 2,
+    opacity: 1,
+    text: 'Edge gateway',
+    label: 'gateway',
+  },
+  {
+    id: 'service-node',
+    type: 'rectangle',
+    x: 480,
+    y: 300,
+    width: 190,
+    height: 92,
+    rotation: 0,
+    fill: '#f5f3ff',
+    stroke: '#8b5cf6',
+    strokeWidth: 2,
+    opacity: 1,
+    text: 'Service mesh',
+    label: 'mesh',
+  },
+  {
+    id: 'db-node',
+    type: 'ellipse',
+    x: 810,
+    y: 180,
+    width: 150,
+    height: 110,
+    rotation: 0,
+    fill: '#ecfdf5',
+    stroke: '#10b981',
+    strokeWidth: 2,
+    opacity: 1,
+    text: 'Postgres',
+    label: 'data',
+  } as CanvasObject,
+  {
+    id: 'gateway-copy',
+    type: 'text',
+    x: 194,
+    y: 265,
+    width: 220,
+    height: 38,
+    rotation: 0,
+    fill: 'transparent',
+    stroke: 'transparent',
+    strokeWidth: 0,
+    opacity: 1,
+    text: 'Requests route here first',
+  },
+];
+
+export const collaborators: Collaborator[] = [
+  { id: 'maya', name: 'Maya Chen', initials: 'MC', color: '#7c3aed', cursor: { x: 650, y: 210 }, status: 'editing' },
+  { id: 'leo', name: 'Leo Park', initials: 'LP', color: '#0891b2', cursor: { x: 860, y: 400 }, status: 'viewing' },
+  { id: 'you', name: 'You', initials: 'YO', color: '#4f46e5', cursor: { x: 380, y: 330 }, status: 'editing' },
+];
+
+export const workspaceTypes = [
+  { name: 'Whiteboard', eyebrow: 'Think visually', description: 'A flexible canvas for diagrams, flows, and the ideas between them.', icon: '✦', route: '/board/new', tone: 'indigo' },
+  { name: 'Algorithm Lab', eyebrow: 'Learn by seeing', description: 'Step through sorting, graphs, and trees with notes at every move.', icon: '↗', route: '/algorithm', tone: 'amber' },
+  { name: 'Developer Studio', eyebrow: 'Make systems legible', description: 'Shape architecture, APIs, and code snippets into shared context.', icon: '⌘', route: '/board/api-review', tone: 'violet' },
+  { name: '3D Workspace', eyebrow: 'Coming next', description: 'Explore spatial layouts and structures with a lazy-loaded 3D editor.', icon: '◇', route: '/board/3d-preview', tone: 'teal' },
+];
