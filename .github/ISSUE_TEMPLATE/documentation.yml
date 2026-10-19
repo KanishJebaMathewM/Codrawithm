@@ -1,0 +1,66 @@
+name: Documentation Improvement
+description: Report missing, unclear, or incorrect documentation
+labels:
+  - documentation
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Thanks for helping improve our documentation!
+        Good documentation makes Codrawithm more accessible to everyone. Please describe what needs to be fixed or added.
+
+  - type: input
+    id: doc-location
+    attributes:
+      label: Document Title / Location
+      description: Which document or page needs improvement? Provide the file path or URL.
+      placeholder: e.g. docs/community/contribution-guide.md or https://...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: issue-type
+    attributes:
+      label: Issue Type
+      description: What kind of documentation problem is this?
+      options:
+        - Missing — this topic isn't documented at all
+        - Incorrect — the documentation contains wrong information
+        - Outdated — the documentation no longer reflects the current state
+        - Unclear — the documentation is hard to understand
+        - Link broken — a link in the documentation is broken
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: current-content
+    attributes:
+      label: Current Content
+      description: Paste or describe what the documentation currently says (or note that it is missing).
+      placeholder: "The current text says: '...' / This topic is not documented."
+
+  - type: textarea
+    id: suggested-improvement
+    attributes:
+      label: Suggested Improvement
+      description: What should the documentation say instead? Provide a rewrite, additions, or a clear description of what is needed.
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Any other context, related links, or references that would help address this documentation issue.
+
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Confirmations
+      options:
+        - label: I have checked that this documentation issue has not already been reported.
+          required: true
+        - label: I have provided enough detail for someone to act on this report.
+          required: true

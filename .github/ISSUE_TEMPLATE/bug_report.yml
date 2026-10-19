@@ -1,0 +1,109 @@
+name: Bug Report
+description: Report something that isn't working
+labels:
+  - bug
+  - needs-triage
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Thanks for taking the time to report a bug!
+        Clear bug reports help us fix issues faster. Please fill in as much detail as you can.
+
+  - type: input
+    id: bug-title
+    attributes:
+      label: Bug Title
+      description: A short, descriptive title for the bug.
+      placeholder: e.g. "Canvas zoom resets when switching algorithm panels"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Briefly describe what happened and what you expected to happen instead.
+      placeholder: |
+        What happened:
+        What I expected:
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Steps to Reproduce
+      description: Step-by-step instructions to reliably reproduce the bug.
+      placeholder: |
+        1. Go to '...'
+        2. Click on '...'
+        3. Observe '...'
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected Behavior
+      description: What should have happened?
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual-behavior
+    attributes:
+      label: Actual Behavior
+      description: What actually happened? Include any error messages you saw.
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Provide details about the environment where the bug occurred.
+      placeholder: |
+        - Browser & version: e.g. Chrome 124, Firefox 125
+        - OS: e.g. Windows 11, macOS 14, Ubuntu 22.04
+        - Screen size / resolution: e.g. 1920×1080, 13" laptop display
+        - Zoom level: e.g. 100%
+    validations:
+      required: true
+
+  - type: textarea
+    id: console-errors
+    attributes:
+      label: Console Errors
+      description: Paste any errors from the browser console (F12 → Console tab). Leave blank if none.
+      render: shell
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots or Recordings
+      description: Attach screenshots, screen recordings, or GIFs that illustrate the bug. Drag and drop files here.
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      description: How severely does this bug affect your work?
+      options:
+        - "Critical — app crashes or data is lost"
+        - "High — core feature is broken, no workaround"
+        - "Medium — feature is impaired, workaround exists"
+        - "Low — minor visual or cosmetic issue"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Confirmations
+      options:
+        - label: I have searched existing issues and this is not a duplicate.
+          required: true
+        - label: I have provided clear steps to reproduce the bug.
+          required: true

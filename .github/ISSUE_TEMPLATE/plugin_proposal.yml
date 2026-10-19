@@ -1,0 +1,102 @@
+name: Plugin / Extension Proposal
+description: Propose a new plugin or extension for Codrawithm
+labels:
+  - plugin-proposal
+  - needs-discussion
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Plugin Proposals
+        > **Note:** The Codrawithm plugin system is **planned but not yet implemented**. Proposals submitted here will inform the plugin API design and help prioritize which capabilities to build first. Thank you for thinking ahead!
+
+  - type: input
+    id: plugin-name
+    attributes:
+      label: Plugin Name
+      description: A short, descriptive name for the proposed plugin.
+      placeholder: e.g. "Mermaid Diagram Importer"
+    validations:
+      required: true
+
+  - type: textarea
+    id: plugin-purpose
+    attributes:
+      label: Plugin Purpose and Description
+      description: What does this plugin do? What problem does it solve for Codrawithm users?
+      placeholder: "This plugin would... enabling users to..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: user-story
+    attributes:
+      label: User Story
+      description: Describe the plugin's value from a user perspective.
+      placeholder: |
+        As a [role],
+        I want [capability],
+        so that [benefit].
+    validations:
+      required: true
+
+  - type: textarea
+    id: api-surface
+    attributes:
+      label: Proposed API Surface
+      description: What canvas, workspace, or application APIs would this plugin need access to? Be as specific as you can about read vs. write access.
+      placeholder: |
+        - Read access to: canvas nodes, edges, layout
+        - Write access to: canvas nodes (create/update)
+        - Events needed: onNodeSelect, onCanvasSave
+        - UI extension points: toolbar button, context menu item
+
+  - type: textarea
+    id: external-dependencies
+    attributes:
+      label: External Services or Dependencies
+      description: Does this plugin rely on any external services, APIs, or third-party libraries? List them here.
+      placeholder: "e.g. OpenAI API, D3.js, user's local file system"
+
+  - type: dropdown
+    id: plugin-category
+    attributes:
+      label: Plugin Category
+      description: What category best describes this plugin?
+      options:
+        - AI — integrates AI/ML capabilities
+        - Import-Export — adds new file formats or data sources
+        - Visualization — adds new ways to render or display content
+        - Theming — customizes the visual appearance
+        - Integration — connects to external tools or services
+        - Utility — general-purpose tools and helpers
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: security-considerations
+    attributes:
+      label: Security Considerations
+      description: Does this plugin handle sensitive data, make network requests, or require elevated permissions? Describe any security implications and how they should be mitigated.
+      placeholder: "e.g. This plugin sends canvas data to an external API — data should be opt-in and clearly disclosed to users."
+    validations:
+      required: true
+
+  - type: textarea
+    id: similar-plugins
+    attributes:
+      label: Similar Plugins in Other Tools
+      description: Are there similar plugins or extensions in tools like Figma, VS Code, Obsidian, or others? Links and descriptions help us understand prior art.
+
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Confirmations
+      options:
+        - label: I have read the plugin security documentation (or noted that it does not yet exist).
+          required: true
+        - label: This plugin will not track users or collect data without explicit consent.
+          required: true
+        - label: I am willing to help maintain this plugin if it is built.

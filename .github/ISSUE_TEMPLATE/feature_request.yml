@@ -1,0 +1,104 @@
+name: Feature Request
+description: Propose a new feature or improvement
+labels:
+  - enhancement
+  - needs-discussion
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Thanks for proposing a new feature!
+        The best feature requests describe a real problem first, then a potential solution. Please fill in as much detail as you can.
+
+  - type: input
+    id: feature-title
+    attributes:
+      label: Feature Title
+      description: A short, descriptive title for your feature request.
+      placeholder: e.g. "Export algorithm animation as GIF"
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem-statement
+    attributes:
+      label: Problem Statement
+      description: What problem does this feature solve? Who experiences it and in what context?
+      placeholder: "As a user who... I find it frustrating that... because..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: current-workflow
+    attributes:
+      label: Current Workflow
+      description: How do you handle this today? What is the friction or limitation?
+      placeholder: "Currently I have to... which is painful because..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: Proposed Solution
+      description: Describe the feature you would like to see. Be as specific as you can.
+    validations:
+      required: true
+
+  - type: textarea
+    id: user-story
+    attributes:
+      label: Concrete Example / User Story
+      description: Walk through a specific scenario where this feature would be used.
+      placeholder: |
+        As a [role],
+        I want [capability],
+        so that [benefit].
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Have you considered any alternative approaches? Why were they ruled out?
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How important is this feature to you?
+      options:
+        - "Must Have — I cannot use the app effectively without this"
+        - "Should Have — important but I can work around it"
+        - "Nice to Have — would improve my experience"
+        - "Future Consideration — long-term / speculative idea"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: workspace-type
+    attributes:
+      label: Workspace Type Affected
+      description: Which part of Codrawithm does this feature relate to?
+      options:
+        - Core Canvas
+        - Algorithm Visualization
+        - Developer Studio
+        - 3D Workspace
+        - AI Studio
+        - Collaboration
+        - All
+        - Other
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Confirmations
+      options:
+        - label: I have searched existing issues and discussions and this is not a duplicate.
+          required: true
+        - label: This is not a duplicate of an existing open issue.
+          required: true
+        - label: I am willing to help implement this feature if guidance is provided.
