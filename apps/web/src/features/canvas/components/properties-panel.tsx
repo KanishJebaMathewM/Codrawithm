@@ -3,7 +3,7 @@ import { Button, Divider, SectionLabel } from '../../../components/ui/primitives
 import { useCanvasStore } from '../../../stores/canvas-store';
 
 export function PropertiesPanel() {
-  const { objects, selectedIds, showProperties, updateObject, gridVisible, toggleGrid } = useCanvasStore();
+  const { objects, selectedIds, showProperties, updateObject, gridVisible, toggleGrid, boardBackground, setBoardBackground } = useCanvasStore();
   if (!showProperties) return null;
   const selected = selectedIds.length === 1 ? objects.find((object) => object.id === selectedIds[0]) : null;
   const selectedCount = selectedIds.length;
@@ -17,7 +17,7 @@ export function PropertiesPanel() {
       <Divider />
       <InspectorSection title="Text" icon={<Type size={14} />}><textarea className="text-editor" value={selected.text ?? ''} onChange={(event) => updateObject(selected.id, { text: event.target.value })} /><div className="text-actions"><Button variant="soft" size="icon" aria-label="Align left"><AlignLeft size={15} /></Button><Button variant="soft" size="icon" aria-label="Align center"><AlignCenter size={15} /></Button><Button variant="soft" size="icon" aria-label="Align right"><AlignRight size={15} /></Button><Button variant="soft" size="icon" aria-label="Lock object"><Lock size={15} /></Button></div></InspectorSection>
     </> : <>
-      <div className="board-setting-card"><span className="setting-label">Canvas background</span><div className="background-options"><button className="background-option is-selected"><span className="background-swatch background-swatch-white" />Paper</button><button className="background-option"><span className="background-swatch background-swatch-tint" />Mist</button></div></div>
+      <div className="board-setting-card"><span className="setting-label">Board color</span><div className="background-options">{[{ name: 'Paper', color: '#fbfcff' }, { name: 'Warm', color: '#fffaf2' }, { name: 'Mist', color: '#f1f5f9' }, { name: 'Night', color: '#202938' }].map(({ name, color }) => <button key={name} className={`background-option ${boardBackground === color ? 'is-selected' : ''}`} onClick={() => setBoardBackground(color)}><span className="background-swatch" style={{ backgroundColor: color }} />{name}</button>)}</div><label className="custom-board-color"><span>Custom color</span><input type="color" value={boardBackground} onChange={(event) => setBoardBackground(event.target.value)} /></label></div>
       <div className="board-setting-card"><div className="setting-inline"><span><strong>Show grid</strong><small>Subtle guide dots on the canvas</small></span><button className={`toggle ${gridVisible ? 'is-on' : ''}`} onClick={toggleGrid} aria-label="Toggle grid"><span /></button></div></div>
       <div className="empty-inspector"><div className="empty-inspector-icon">✦</div><strong>Select an object to inspect</strong><span>Click any shape on the canvas to tune its layout and style.</span></div>
     </>}

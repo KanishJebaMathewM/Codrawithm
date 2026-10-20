@@ -12,8 +12,13 @@ import { CanvasStage } from './components/canvas-stage';
 export function BoardPage() {
   const { boardId } = useParams({ from: '/board/$boardId' });
   const setBoard = useCanvasStore((state) => state.setBoard);
+  const saveState = useCanvasStore((state) => state.saveState);
   const markSaved = useCanvasStore((state) => state.markSaved);
-  useEffect(() => { setBoard(boardId, boardId === 'new' ? 'Untitled board' : boardId === 'api-review' ? 'API review board' : boardId === 'system-map' ? 'Distributed system map' : 'Untitled board'); }, [boardId, setBoard]);
-  useEffect(() => { const interval = window.setInterval(markSaved, 5000); return () => window.clearInterval(interval); }, [markSaved]);
-  return <main className="editor-shell"><TopBar /><div className="editor-main"><ToolPalette /><div className="canvas-column"><CanvasStage /><Minimap /></div><PropertiesPanel /><AiPanel /></div><StatusBar /></main>;
+  useEffect(() => { setBoard(boardId, boardId === 'new' ? 'Untitled board' : undefined); }, [boardId, setBoard]);
+  useEffect(() => {
+    if (saveState !== 'unsaved') return;
+    const timeout = window.setTimeout(markSaved, 450);
+    return () => window.clearTimeout(timeout);
+  }, [saveState, markSaved]);
+  return <main className="editor-shell"><TopBar /><div className="editor-main"><div className="canvas-column"><ToolPalette /><CanvasStage /><Minimap /></div><PropertiesPanel /><AiPanel /></div><StatusBar /></main>;
 }

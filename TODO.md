@@ -1,35 +1,48 @@
-# Codrawithm Initial Frontend TODO
+# Codrawithm Phase 1 Local MVP TODO
 
 ## Delivered outcomes
 
-- [x] **Contributor-ready workspace scaffold**
-  - The codebase uses React 18, TypeScript 5 strict, Vite 5, Tailwind CSS 3, Konva/react-konva, Zustand, TanStack Router, Lucide React, Vitest-ready scripts, and Playwright-ready scripts.
-  - The frontend is organized feature-first under `apps/web`, with explicit seams for future Rust/Axum backend, Yjs collaboration, plugins, algorithm visualizations, import/export, and 3D.
-  - The supplied documentation remains available in `docs/` and the project includes `plan.md` describing how the parts fit together.
+- [x] **Existing local application foundation**
+  - The existing app uses React + TypeScript + Vite, Konva, Zustand, a pnpm workspace, a feature-first frontend structure, and local-only state seams; this work reuses those foundations rather than adding a hosted service.
+  - The initial contributor scaffold, dashboard, canvas shell, algorithm route, local storage, and JSON download pre-exist this MVP scope.
 
-- [x] **Canvas-first editor shell**
-  - The app provides a persistent top bar, collapsible left tool palette, central canvas, collapsible properties panel, minimap overlay, optional AI panel, and bottom status bar.
-  - Controls use accessible labels, visible focus states, keyboard shortcuts, responsive collapse behavior, and the documented Inter/JetBrains Mono typography direction.
+## In progress / MVP outcomes
 
-- [x] **Interactive 2D canvas milestone**
-  - The canvas is pannable and zoomable with a dotted-grid background and a viewport that can be reset to fit the board.
-  - Rectangle, ellipse, diamond, line, arrow, text, sticky note, frame, pen, connector, hand, zoom, and eraser tool affordances are present; shape/text/sticky/frame tools create local mock objects on the canvas.
-  - Users can click to select objects, Shift+click to multi-select, drag selected shapes, delete selected objects, duplicate selected objects, and use undo/redo controls and keyboard shortcuts.
-  - The object inspector exposes position, size, rotation, fill, stroke, opacity, and text controls for the selected object.
-  - A minimap, collaborator cursor cues, autosave status, selection summary, coordinates, and zoom controls are visible in the editor shell.
+- [ ] **Canvas-first workspace navigation**
+  - The canvas is the primary entry screen; there is no separate dashboard workflow. Users can switch/create boards and open the algorithm visualization from the canvas top bar.
+  - A Sign in entry point is visible at the top right and explains that authentication/cloud sync are not yet connected; local-only storage behavior is clear.
+  - AI Studio is reachable from the canvas; it accurately indicates that no provider is connected and does not imply offline generation works.
 
-- [x] **Workspace entry points**
-  - The dashboard presents workspace cards for Whiteboard, Algorithm Lab, Developer Studio, and 3D Workspace with a clear entry CTA.
-  - The Algorithm Lab route provides a starter sorting visualization view with array input, algorithm selection, step controls, speed control, complexity metadata, and step notes using local state.
-  - The AI panel affordance opens a focused prompt surface with provider/usage status and a mock “insert to canvas” action.
+- [ ] **Expanded canvas controls and board appearance**
+  - The left tool rail is grouped, scrollable, and contains additional shape/content tools. Hovering or focusing a tool exposes stroke-color choices.
+  - Users can choose a board background color. The overview/minimap is off by default and can be enabled in settings; the preference is saved locally.
 
-- [x] **Local export and persistence seams**
-  - Board JSON can be downloaded locally from the export menu and board state is persisted to local storage with a visible saved timestamp.
-  - The project contains clearly named API/collaboration extension points without storing external credentials in the browser.
+- [ ] **Canvas drawing and object manipulation**
+  - Users can draw shapes, lines/arrows, text, sticky notes, and frames by dragging on the canvas; users can create freehand strokes with the pen and erase strokes with the eraser.
+  - Users can select one or multiple objects, move them, resize and rotate them, delete them, and duplicate them. Shift-click adds or toggles items in a multi-selection; clicking empty canvas clears selection.
+  - Users can pan and zoom the canvas and use the documented core tool-selection and undo/redo keyboard shortcuts without shortcuts hijacking text-entry controls.
 
-## Open follow-up outcomes
+- [ ] **Board state, autosave, and bounded history**
+  - A board has a serializable document and distinct object list. Board edits autosave locally and survive reload; multiple boards are stored independently and switching boards does not overwrite another board.
+  - Undo and redo restore document edits, including completed drawing/manipulation operations, and the undo history is capped at 100 operations.
+  - Save status reflects pending and completed persistence rather than declaring unsaved work saved solely because time elapsed.
 
-- [ ] Connect board state to Yjs + y-websocket + y-indexeddb and replace local history with CRDT-aware transactions.
-- [ ] Implement full pointer gesture tool contracts, marquee selection, resize/rotation handles, connector routing, freehand smoothing, and PNG/SVG/PDF export.
-- [ ] Add Rust/Axum API, PostgreSQL/Redis infrastructure, authentication, permissions, comments, and durable board storage.
-- [ ] Add Shiki-backed code blocks, plugin sandbox/manifest permissions, lazy Three.js workspace, and production observability/performance harnesses.
+- [ ] **JSON portability and local image/vector export**
+  - Users can download a Codrawithm JSON board containing format/version, board identity/title, workspace type, objects, connectors, frames, algorithm state, and export metadata.
+  - Users can import a `.json` Codrawithm board. Validation rejects malformed/unsupported documents with a descriptive error; the user can review the board title and object count and confirm import as a new board. Import never overwrites an existing board.
+  - Users can export the current 2D board as PNG and SVG, in addition to JSON; export is local and does not send board contents to a server.
+
+- [ ] **Starter board templates**
+  - Users can start a blank board, a flowchart board, or a mind-map board. Creating a board from a template creates a distinct board and does not replace existing boards.
+
+- [x] **Local build and run**
+  - Automated tests cover board schema/round-trip and bounded history; all six frontend unit tests pass, the TypeScript production build passes, and the Vite production build completes.
+  - The local Vite app starts on `127.0.0.1:3000` and responds with HTTP 200; its development server is left running.
+
+- [ ] **Accessibility and responsive acceptance**
+  - Existing instrument-panel styling, canvas-first layout, readable labels, focus visibility, reduced-motion behavior, and responsive behavior are preserved or improved.
+
+## Deferred roadmap outcomes
+
+- [ ] **Phase 1 platform backend** — Rust + Axum health/API scaffold, PostgreSQL schema/migrations, and backend integration tests remain deferred from this plain-local browser MVP.
+- [ ] **Later phases** — Yjs collaboration and offline sync, accounts/permissions/comments, AI plugin platform, 3D workspace, advanced algorithm visualizations, production observability, and production deployment remain roadmap work and are not represented as implemented here.

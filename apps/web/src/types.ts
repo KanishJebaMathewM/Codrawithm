@@ -7,8 +7,11 @@ export type ToolId =
   | 'arrow'
   | 'connector'
   | 'rectangle'
+  | 'rounded-rectangle'
   | 'ellipse'
   | 'diamond'
+  | 'triangle'
+  | 'star'
   | 'text'
   | 'sticky'
   | 'frame'
@@ -16,9 +19,13 @@ export type ToolId =
   | 'eraser';
 
 export type CanvasObjectType =
+  | 'path'
   | 'rectangle'
+  | 'rounded-rectangle'
   | 'ellipse'
   | 'diamond'
+  | 'triangle'
+  | 'star'
   | 'line'
   | 'arrow'
   | 'text'
@@ -42,6 +49,19 @@ export interface CanvasObject {
   points?: number[];
   label?: string;
   language?: string;
+}
+
+export interface BoardDocument {
+  format: 'codrawithm';
+  version: '1.0';
+  boardId: string;
+  title: string;
+  workspaceType: string;
+  objects: CanvasObject[];
+  connectors: CanvasObject[];
+  frames: CanvasObject[];
+  algorithm: null;
+  metadata: { createdAt: string; updatedAt: string; exportedAt?: string };
 }
 
 export interface Viewport {
