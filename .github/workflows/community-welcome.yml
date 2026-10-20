@@ -1,0 +1,53 @@
+name: Community welcome
+
+on:
+  issues:
+    types: [opened]
+  pull_request_target:
+    types: [opened]
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  welcome:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Welcome issue author
+        if: github.event_name == 'issues'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const message = [
+              `Thanks for opening this issue, @${issue.user.login}!`,
+              '',
+              `If you’d like to work on this, just let us know in a comment and a maintainer can assign it to you. No pressure—when you’re comfortable, you’re welcome to open a pull request.`,
+              '',
+              `Please also check our [contribution guide](https://github.com/${context.repo.owner}/${context.repo.repo}/blob/HEAD/CONTRIBUTING.md).`
+            ].join('\n');
+            await github.rest.issues.createComment({
+              ...context.repo,
+              issue_number: issue.number,
+              body: message
+            });
+
+      - name: Welcome pull request author
+        if: github.event_name == 'pull_request_target'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pullRequest = context.payload.pull_request;
+            const message = [
+              `Thank you for your contribution, @${pullRequest.user.login}!`,
+              '',
+              `Our mentors and maintainers will review your pull request and share feedback. Thanks for helping Codrawithm grow!`,
+              '',
+              `If you find Codrawithm useful, please consider [starring the project](https://github.com/${context.repo.owner}/${context.repo.repo}) to support us.`
+            ].join('\n');
+            await github.rest.issues.createComment({
+              ...context.repo,
+              issue_number: pullRequest.number,
+              body: message
+            });

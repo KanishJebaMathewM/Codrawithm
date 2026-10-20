@@ -1,72 +1,40 @@
-# Codrawithm Initial Frontend Plan
+# Codrawithm Phase 1 Local MVP Plan
 
 ## Scope
 
-This milestone turns the documentation-only Codrawithm proposal into a contributor-ready React frontend scaffold. It focuses on the first useful slice of the product: a dashboard for entering workspaces, a modular board editor shell, an interactive 2D canvas backed by Konva, a starter Algorithm Lab view, and local mock state that can be replaced by the future Rust/Axum API and Yjs collaboration layer.
+This implementation continues the existing `apps/web` React + TypeScript + Vite application as a plain-local, single-user Phase 1 MVP. The canvas is the primary home and workspace hub: switch boards, open algorithm visualizations, open AI Studio, use drawing/export controls, and reach settings without a separate dashboard. Keep data on this computer; do not enable Manus-managed services, create cloud infrastructure, add authentication, or publish the app. Show a sign-in entry point that clearly explains account/cloud sync is not connected. Keep AI Studio accessible but do not claim generation works until a provider is actually configured.
 
-The implementation deliberately keeps infrastructure off for now. There is no authentication, database, WebSocket provider, or AI credential in the browser. Those are extension points with typed seams and UI affordances. The app is still useful offline as a visual prototype: users can create/select basic objects, change their tool, pan/zoom the stage, open properties, use undo/redo, inspect a minimap, open the AI panel, export board JSON, and move between dashboard, board, and algorithm routes.
+The existing Rust/Axum, PostgreSQL, Redis, Yjs collaboration, AI plugin, and 3D architecture documents describe later platform capabilities or separate Phase 1 deliverables. They remain future roadmap work and must not be implied to work in this offline MVP. Existing code and uncommitted user changes are preserved; edits stay focused on `apps/web` and this plan/TODO.
 
 ## Implementation approach
 
-- **Framework and build:** React 18 + TypeScript strict + Vite 5, with a pnpm workspace root.
-- **Styling:** Tailwind CSS 3 is configured for future utility composition; the initial UI uses a small owned token layer in `apps/web/src/styles.css` so the design remains readable without a generated component dependency.
-- **Canvas:** `react-konva`/`konva` render a layered stage with a dotted background, objects, selection affordances, collaborator cursor cues, and an overlay minimap. The current object model is intentionally small but maps to the documented `CanvasObject` direction.
-- **State:** Zustand owns active tool, objects, selection, viewport, history, panel visibility, save status, and algorithm state. The store exposes methods that can later become Yjs-backed mutations without rewriting view components.
-- **Routing:** TanStack Router defines `/`, `/board/$boardId`, and `/algorithm`, keeping future lazy route boundaries obvious.
-- **Feature-first structure:** `features/canvas`, `features/dashboard`, `features/algorithm-viz`, and `features/collaboration` own vertical slices. Shared UI primitives live in `components/ui` and cross-cutting types/utilities in `lib` and `stores`.
-- **Backend seams:** `api/` holds future client modules; `features/collaboration` contains the local presence model and documents where `Y.Doc`, `WebsocketProvider`, and indexedDB persistence will attach later. No fake network calls are made.
+- **Runtime:** Reuse the pnpm workspace, React 18, TypeScript strict, Vite 5, Konva, Zustand, and installed dependencies. Run the frontend using its existing local Vite script and port.
+- **Scene/document:** Strengthen the local board document format and validate imported JSON before adding it as a new board. Preserve shape, text, connector, frame, and metadata values supported by the current editor.
+- **Canvas interaction:** Use Konva pointer events for drag-drawing and freehand input, and Konva's selection transformer for resize/rotation. Provide a scrollable, grouped tool rail with color controls on hover; support board background colors and settings for optional overview/minimap (off by default). Keep viewport pan/zoom, multi-select, connector endpoint handling where practical, and core tool keyboard shortcuts consistent with the docs.
+- **History and save:** Keep up to 100 document snapshots for undo/redo. Persist each board independently in localStorage and save on document changes rather than using a timer that marks unsaved changes as saved.
+- **Portability/templates:** Support canonical JSON export/import and PNG/SVG export for the current 2D scene. Provide blank, flowchart, and mind-map board templates without overwriting existing boards.
+- **Testing:** Extend existing Vitest coverage around schema validation, JSON round-trip, history bounds, and canvas helpers. Use the existing TypeScript/build checks and run the app locally to confirm readiness.
 
 ## Design direction
 
-Three possible design movements were considered:
-
-1. **Instrument panel minimalism** — 0.06: a calm technical cockpit with tight labels and precise controls.
-2. **Soft brutalist studio** — 0.05: generous canvas space, high-contrast panels, and direct, tactile controls.
-3. **Editorial developer notebook** — 0.04: paper-like surfaces, mono accents, and narrative workspace metadata.
-
-### Chosen direction: Instrument panel minimalism
-
-- **Design Movement:** A light technical cockpit inspired by Figma/Linear tooling, with a quiet canvas and highly legible control surfaces.
-- **Core Principles:** Canvas-first hierarchy; progressive complexity; precise feedback; accessible keyboard-friendly controls.
-- **Color Philosophy:** White and mist surfaces keep visual thinking calm, while indigo marks action and violet marks collaboration/AI. Green is reserved for saved/connected state; amber calls attention without alarms.
-- **Layout Paradigm:** A fixed top command rail, narrow left instrument strip, expansive central canvas, and optional right inspector. The canvas remains the largest uninterrupted plane.
-- **Signature Elements:** Compact uppercase eyebrow labels; indigo-to-violet connection line; thin dotted-grid field with small collaborator cursor chips.
-- **Interaction Philosophy:** Every control gives immediate visual feedback; tool changes are explicit and keyboard-visible; panels collapse rather than compete with the canvas.
-- **Animation:** Use 100–200ms easing for panel/tool state changes, subtle object scale-in on creation, and no looping motion outside loading/AI generation. Respect reduced-motion preferences.
-- **Typography System:** Inter for UI/body, JetBrains Mono for shortcuts, coordinates, and algorithm metadata. Use compact 11px/12px labels and 14px/18px working text.
-- **Brand Essence:** One canvas for technical thinking, built for people who explain systems. Personality: precise, open, energetic.
-- **Brand Voice:** Direct and encouraging. Examples: “Make the next idea visible.” and “Start with a shape. Leave with a system.”
-- **Wordmark & Logo:** A small linked-node mark made from three rounded rectangles joined by a diagonal stroke, paired with a lowercase `codrawithm` wordmark.
-- **Signature Brand Color:** `#4f46e5` indigo, used as the ownable action and focus color.
+Retain the established instrument-panel minimalism: light technical surfaces, calm dotted canvas, compact controls, indigo actions, violet collaboration accents, and visible keyboard focus. Maintain the canvas-first hierarchy and existing typography system. Avoid false collaborator/AI claims in a single-user local MVP; clearly label mock or future-facing affordances where they remain.
 
 ## Project structure
 
 ```text
-apps/web/
-├── src/
-│   ├── main.tsx, app.tsx, router.tsx
-│   ├── components/ui/                 # owned button, badge, tooltip-like primitives
-│   ├── features/
-│   │   ├── dashboard/                 # workspace cards and entry points
-│   │   ├── canvas/                    # editor shell, Konva stage, palette, inspector
-│   │   ├── algorithm-viz/             # algorithm lab starter view
-│   │   └── collaboration/             # local presence model and future Yjs seam
-│   ├── stores/                        # Zustand canvas and UI state
-│   ├── lib/                           # ids, export helpers, canvas math
-│   ├── api/                           # future API client seams
-│   ├── types.ts
-│   └── styles.css
-├── public/manus-routes.json
-├── index.html
-├── vite.config.ts
-├── tailwind.config.ts
-└── package.json
-packages/
-├── ui/                                # future shared shadcn/ui package boundary
-├── canvas-core/                       # future renderer/math package boundary
-└── shared-types/                      # future API/shared type package boundary
+apps/web/src/
+├── features/canvas/                 # editor shell and Konva canvas interactions
+├── features/dashboard/               # local board entry points and templates
+├── lib/                              # board schema, import/export, canvas helpers
+├── stores/                           # local board documents and bounded history
+├── types.ts                          # document, object and tool types
+└── styles.css                        # existing design tokens and responsive styling
+apps/web/public/manus-routes.json     # static route manifest
+apps/web/tests/ and src/**/*.test.ts  # automated tests
+plan.md                               # implementation/design decisions
+TODO.md                               # acceptance outcomes and progress
 ```
 
-## Serving and delivery
+## Serving
 
-The app listens on port 3000 for Preview. `public/manus-routes.json` declares the three page routes. `pnpm build` outputs `apps/web/dist`, and the root build script delegates to the workspace package. The project remains static-only for this milestone; the future backend can be added without changing the frontend route structure.
+Use `pnpm --filter @codrawithm/web dev` from the repository root (or the existing `apps/web` dev script) to run the local frontend. Use the existing `pnpm --filter @codrawithm/web test` and `pnpm --filter @codrawithm/web build` commands for validation. Do not start backend or database infrastructure for this local-only MVP.

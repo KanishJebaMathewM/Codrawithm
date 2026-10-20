@@ -1,6 +1,7 @@
 {
   "routes": [
-    { "path": "/", "title": "Codrawithm workspaces" },
+    { "path": "/", "title": "Codrawithm canvas" },
+    { "path": "/dashboard", "title": "Canvas redirect" },
     { "path": "/board/:boardId", "title": "Board editor" },
     { "path": "/algorithm", "title": "Algorithm Lab" }
   ]
