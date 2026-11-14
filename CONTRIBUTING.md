@@ -270,7 +270,8 @@ Violations of the Code of Conduct may result in removal from the project's space
 
 ## Contact and getting help
 
-The primary venue for discussion is [GitHub Discussions](https://github.com/KanishJebaMathewM/Codrawithm/discussions). Whether you have a question about the project direction, want to propose a feature, or need help getting started, Discussions is the right place.
+- **Discord Community:** Join our Discord server at [https://discord.gg/7MhyE48Au](https://discord.gg/7MhyE48Au) for real-time collaboration, discussing Codrawithm features, getting setup assistance, and connecting over other open-source projects.
+- **GitHub Discussions:** The asynchronous venue for discussion is [GitHub Discussions](https://github.com/KanishJebaMathewM/Codrawithm/discussions). Whether you have a question about the project direction, want to propose a feature, or need help getting started, Discussions is the right place.
 
 For private concerns, security issues, or Code of Conduct reports, contact the maintainers directly as described in [SECURITY.md](SECURITY.md) and [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 
